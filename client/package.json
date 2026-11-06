@@ -1,0 +1,21 @@
+{
+  "name": "test-mern-client",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "antd": "^6.6.8",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router": "^7.18.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.2",
+    "vite": "^7.1.7"
+  }
+}

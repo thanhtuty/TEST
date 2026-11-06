@@ -1,0 +1,24 @@
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.brand,
+.nav-link {
+  color: #222;
+  text-decoration: none;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.site-nav {
+  display: flex;
+  gap: 24px;
+}
