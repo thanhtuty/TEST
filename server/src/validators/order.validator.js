@@ -67,14 +67,31 @@ export function validateOrderPayload(body) {
       continue;
     }
 
-    const totalQuantity = (quantities.get(productId) || 0) + quantity;
-
-    if (totalQuantity > 99) {
-      errors.push("Số lượng mỗi sản phẩm tối đa là 99.");
+    if (
+      (item?.size != null && typeof item.size !== "string") ||
+      (item?.color != null && typeof item.color !== "string")
+    ) {
+      errors.push("Kích thước hoặc màu sắc không hợp lệ.");
       continue;
     }
 
-    quantities.set(productId, totalQuantity);
+    const size = item.size?.trim() || "";
+    const color = item.color?.trim() || "";
+
+    if (size.length > 50 || color.length > 50) {
+      errors.push("Kích thước hoặc màu sắc không hợp lệ.");
+      continue;
+    }
+
+    const key = JSON.stringify([productId, size, color]);
+    const totalQuantity = (quantities.get(key)?.quantity || 0) + quantity;
+
+    if (totalQuantity > 99) {
+      errors.push("Số lượng mỗi lựa chọn sản phẩm tối đa là 99.");
+      continue;
+    }
+
+    quantities.set(key, { productId, size, color, quantity: totalQuantity });
   }
 
   if (errors.length > 0) {
@@ -85,10 +102,36 @@ export function validateOrderPayload(body) {
     valid: true,
     value: {
       customer: { fullName, phone, address, note },
-      items: Array.from(quantities, ([productId, quantity]) => ({
-        productId,
-        quantity,
-      })),
+      items: Array.from(quantities.values()),
     },
+  };
+}
+
+export function validateGuestOrderLookup(body = {}) {
+  const orderId = typeof body.orderId === "string" ? body.orderId.trim() : "";
+  const phone = typeof body.phone === "string" ? body.phone.trim() : "";
+  const phoneDigits = phone.replace(/\D/g, "").length;
+
+  if (!OBJECT_ID_PATTERN.test(orderId)) {
+    return {
+      valid: false,
+      message: "Vui lòng nhập mã đơn hàng hợp lệ.",
+    };
+  }
+
+  if (
+    !/^[0-9+().\s-]{9,20}$/.test(phone) ||
+    phoneDigits < 9 ||
+    phoneDigits > 15
+  ) {
+    return {
+      valid: false,
+      message: "Vui lòng nhập số điện thoại hợp lệ.",
+    };
+  }
+
+  return {
+    valid: true,
+    value: { orderId, phone },
   };
 }

@@ -7,6 +7,10 @@
   padding: 40px 24px;
 }
 
+.product-gallery {
+  min-width: 0;
+}
+
 .product-detail-image {
   aspect-ratio: 4 / 5;
   overflow: hidden;
@@ -29,6 +33,40 @@
   place-items: center;
   color: #80786e;
   letter-spacing: 0.2em;
+}
+
+.product-gallery-thumbnails {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  overflow-x: auto;
+}
+
+.product-gallery-thumbnails button {
+  flex: 0 0 76px;
+  width: 76px;
+  height: 94px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #ddd8d2;
+  background: #f3f0eb;
+  cursor: pointer;
+}
+
+.product-gallery-thumbnails button.is-selected {
+  border: 2px solid #263a32;
+}
+
+.product-gallery-thumbnails button:focus-visible {
+  outline: 2px solid #60786b;
+  outline-offset: 2px;
+}
+
+.product-gallery-thumbnails img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .product-detail-info {
@@ -72,6 +110,14 @@
   font-weight: 600;
 }
 
+.product-size-guide-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #60786b;
+  font-size: 12px;
+  text-underline-offset: 3px;
+}
+
 .product-detail-options {
   display: flex;
   flex-wrap: wrap;
@@ -83,6 +129,26 @@
   padding: 8px 12px;
   border: 1px solid #ddd8d2;
   text-align: center;
+}
+
+.product-detail-option {
+  min-width: 40px;
+  padding: 8px 12px;
+  border: 1px solid #ddd8d2;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.product-detail-option:hover {
+  border-color: #60786b;
+}
+
+.product-detail-option.is-selected {
+  border-color: #263a32;
+  background: #263a32;
+  color: #fff;
 }
 
 .product-detail-stock {
@@ -98,4 +164,26 @@
 
 .product-detail-stock.is-unavailable {
   color: #a33a32;
+}
+
+.product-detail-wishlist {
+  display: inline-block;
+  margin: 0 0 16px;
+  padding: 9px 12px;
+  border: 1px solid #dcd8d1;
+  background: #fff;
+  color: #7c3f42;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.product-detail-wishlist:hover:not(:disabled) {
+  border-color: #9a5c5f;
+  background: #fff8f8;
+}
+
+.product-detail-wishlist:disabled {
+  cursor: wait;
+  opacity: 0.6;
 }

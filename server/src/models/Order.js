@@ -1,6 +1,7 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
+
 const orderItemSchema = new mongoose.Schema(
-    {
+  {
     productId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
@@ -8,14 +9,29 @@ const orderItemSchema = new mongoose.Schema(
     },
     name: { type: String, required: true, trim: true },
     image: { type: String, default: "" },
+    size: { type: String, default: "", trim: true, maxlength: 50 },
+    color: { type: String, default: "", trim: true, maxlength: 50 },
     price: { type: Number, required: true, min: 0 },
     quantity: { type: Number, required: true, min: 1 },
     lineTotal: { type: Number, required: true, min: 0 },
   },
   { _id: false }
-)
+);
+
 const orderSchema = new mongoose.Schema(
   {
+    idempotencyKey: {
+      type: String,
+      unique: true,
+      sparse: true,
+      select: false,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+      index: true,
+    },
     customer: {
       fullName: { type: String, required: true, trim: true, maxlength: 100 },
       phone: { type: String, required: true, trim: true, maxlength: 20 },
